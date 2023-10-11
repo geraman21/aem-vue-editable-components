@@ -22,13 +22,13 @@ import {
 import { PlaceHolderModel } from "./ContainerPlaceholder";
 import { EditConfig } from "./EditableComponent";
 import { Constants } from "../Constants";
-import { Component, Prop, Mixins } from "vue-property-decorator";
+import { Component, Prop, mixins, toNative } from "vue-facing-decorator";
 import Utils from "../Utils";
 
 @Component({
   components: {},
 })
-export class ResponsiveGridPropertiesMixin extends Mixins(
+export class ResponsiveGridPropertiesMixin extends mixins(
   AllowedComponentsPropertiesMixin
 ) {
   @Prop({ default: () => {} }) columnClassNames!: { [key: string]: string };
@@ -38,11 +38,11 @@ export class ResponsiveGridPropertiesMixin extends Mixins(
 @Component({
   components: {},
 })
-export class ResponsiveGrid extends Mixins(
+class ResponsiveGridClass extends mixins(
   ResponsiveGridPropertiesMixin,
   AllowedComponentsContainer
 ) {
-  _allowedComponentPlaceholderListEmptyLabel!: string;
+  declare _allowedComponentPlaceholderListEmptyLabel: string;
 
   get containerAttrs(): any {
     const props: any = {
@@ -83,7 +83,7 @@ export class ResponsiveGrid extends Mixins(
     return props;
   }
 }
-
+const ResponsiveGrid = toNative(ResponsiveGridClass);
 /**
  * @private
  */
